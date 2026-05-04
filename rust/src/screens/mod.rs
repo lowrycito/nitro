@@ -5,6 +5,7 @@
 //! management and the chat UI on top of the same scaffolding.
 
 pub mod app_shell;
+pub mod chat_screen;
 pub mod eula_screen;
 pub mod provider_screens;
 pub mod settings_screen;

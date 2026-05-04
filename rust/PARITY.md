@@ -24,7 +24,7 @@ TypeScript binary matches.
 | 4     | Headless one-shot CLI end-to-end        | [x]     |
 | 5     | ratatui scaffold + EULA + Settings      | [x]     |
 | 6     | Provider screens                        | [x]     |
-| 7     | Chat screen                             | [ ]     |
+| 7     | Chat screen                             | [x]     |
 | 8     | Cutover + polish                        | [ ]     |
 
 ## Feature inventory
@@ -81,19 +81,19 @@ TypeScript binary matches.
 | ProviderEdit     | `screens::provider_screens::ProviderWizardScreen` | x |
 | ProviderRemove   | `screens::provider_screens::PickProviderScreen`   | x |
 | ProviderDefault  | `screens::provider_screens::PickProviderScreen`   | x |
-| ChatScreen       | `screens::chat`            | [ ]    |
+| ChatScreen       | `screens::chat_screen`     | x      |
 
 ### TUI components (`src/components/`)
 
 | Component        | Notes                                             | Status |
 | ---------------- | ------------------------------------------------- | ------ |
-| Message          | Render assistant/user/tool messages               | [ ]    |
-| ChatBox          | Streaming text + scrollback                       | [ ]    |
-| ToolDisplay      | Render tool calls + results                       | [ ]    |
-| BashPrompt       | Approve/reject bash command modal                 | [ ]    |
-| AskPrompt        | Multi-question modal                              | [ ]    |
-| TokenUsageContext| Token totals across the session                   | [ ]    |
-| Custom widgets   | TextInput, Text, Select                           | [ ]    |
+| Message          | Render assistant/user/tool messages               | x      |
+| ChatBox          | Streaming text + scrollback                       | x      |
+| ToolDisplay      | Render tool calls + results                       | x      |
+| BashPrompt       | Approve/reject bash command modal                 | x      |
+| AskPrompt        | Multi-question modal                              | x      |
+| TokenUsageContext| Token totals across the session                   | [~] (Phase 8 polish) |
+| Custom widgets   | TextInput, Text, Select                           | x (inline)           |
 
 ### Tests to mirror
 

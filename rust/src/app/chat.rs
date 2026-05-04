@@ -382,6 +382,12 @@ fn run_ask_call(call: &ToolCall) -> ToolResult {
     }
 }
 
+/// Public alias of [`chrono_like_date`] used by other modules that build
+/// the system prompt (chat screen, settings smoke tests).
+pub fn today_string() -> String {
+    chrono_like_date()
+}
+
 /// Tiny "Month Day, Year" formatter using `time` semantics without pulling in
 /// the `time` or `chrono` crate. UTC is fine for this — the system prompt
 /// just orients the model, calendar precision isn't important.

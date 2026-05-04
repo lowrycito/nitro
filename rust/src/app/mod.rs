@@ -66,12 +66,71 @@ pub async fn run(command: Command, data_dir: PathBuf) -> ExitCode {
             chat::run_one_shot(&data_dir, &request, false, Some(prev)).await
         }
         Command::Strict { request } => chat::run_one_shot(&data_dir, &request, true, None).await,
-        Command::Interactive { .. } | Command::Resume { .. } => {
-            console::error(
-                "interactive/resume require the ratatui chat screen (Phase 7). Use the TS binary, \
-                 or run a one-shot request: nitro \"<request>\"",
-            );
-            ExitCode::from(2)
+        Command::Interactive { request } => run_chat(&data_dir, request, false, None).await,
+        Command::Resume { request } => {
+            let prev = match crate::logic::conversation::last_conversation_filename(&data_dir) {
+                Some(name) => name,
+                None => {
+                    console::error("Error: No conversation to resume.");
+                    return ExitCode::from(1);
+                }
+            };
+            run_chat(&data_dir, request, false, Some(prev)).await
+        }
+    }
+}
+
+/// Launch the ratatui chat screen. Falls back to the headless one-shot
+/// path if stdout isn't a TTY (CI, pipes), so `nitro interactive ...`
+/// still produces useful output in unattended environments.
+async fn run_chat(
+    data_dir: &Path,
+    request: String,
+    strict: bool,
+    initial_filename: Option<String>,
+) -> ExitCode {
+    if !std::io::IsTerminal::is_terminal(&std::io::stdout()) {
+        return chat::run_one_shot(data_dir, &request, strict, initial_filename).await;
+    }
+    let settings = match crate::logic::settings::load_settings(data_dir) {
+        Ok(s) => s,
+        Err(e) => {
+            console::error(&format!("Error: failed to load settings: {e}"));
+            return ExitCode::from(1);
+        }
+    };
+    let provider = match crate::logic::provider::get_default_provider(data_dir) {
+        Ok(Some(p)) => p,
+        Ok(None) => {
+            console::error("Error: no default provider configured. Run `nitro provider add`.");
+            return ExitCode::from(1);
+        }
+        Err(e) => {
+            console::error(&format!("Error: failed to read providers: {e}"));
+            return ExitCode::from(1);
+        }
+    };
+    let cwd = std::env::current_dir()
+        .map(|p| p.display().to_string())
+        .unwrap_or_default();
+    let today = chat::today_string();
+    let system_prompt = crate::logic::settings::build_system_prompt(data_dir, &cwd, &today);
+
+    let cfg = crate::screens::chat_screen::ChatScreenConfig {
+        data_dir: data_dir.to_path_buf(),
+        provider,
+        settings,
+        system_prompt,
+        strict,
+        initial_request: request,
+        initial_filename,
+        hide_previous_messages: false,
+    };
+    match crate::screens::chat_screen::run_chat_screen(cfg).await {
+        Ok(()) => ExitCode::SUCCESS,
+        Err(e) => {
+            console::error(&format!("Error: chat screen failed: {e}"));
+            ExitCode::from(1)
         }
     }
 }
