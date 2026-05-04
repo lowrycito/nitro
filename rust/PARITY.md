@@ -23,7 +23,7 @@ TypeScript binary matches.
 | 3     | LLM clients (3 backends)                | [x]     |
 | 4     | Headless one-shot CLI end-to-end        | [x]     |
 | 5     | ratatui scaffold + EULA + Settings      | [x]     |
-| 6     | Provider screens                        | [ ]     |
+| 6     | Provider screens                        | [x]     |
 | 7     | Chat screen                             | [ ]     |
 | 8     | Cutover + polish                        | [ ]     |
 
@@ -75,12 +75,12 @@ TypeScript binary matches.
 | ---------------- | -------------------------- | ------ |
 | EulaScreen       | `screens::eula_screen`     | x      |
 | SettingsScreen   | `screens::settings_screen` | x      |
-| ProviderRouter   | `screens::provider_router` | [ ]    |
-| ProviderList     | `screens::provider_list`   | [ ]    |
-| ProviderAdd      | `screens::provider_add`    | [ ]    |
-| ProviderEdit     | `screens::provider_edit`   | [ ]    |
-| ProviderRemove   | `screens::provider_remove` | [ ]    |
-| ProviderDefault  | `screens::provider_default`| [ ]    |
+| ProviderRouter   | `app::provider_router`     | x      |
+| ProviderList     | `screens::provider_screens::ProviderListScreen` | x |
+| ProviderAdd      | `screens::provider_screens::ProviderWizardScreen` | x |
+| ProviderEdit     | `screens::provider_screens::ProviderWizardScreen` | x |
+| ProviderRemove   | `screens::provider_screens::PickProviderScreen`   | x |
+| ProviderDefault  | `screens::provider_screens::PickProviderScreen`   | x |
 | ChatScreen       | `screens::chat`            | [ ]    |
 
 ### TUI components (`src/components/`)

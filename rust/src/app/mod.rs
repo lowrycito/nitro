@@ -77,40 +77,61 @@ pub async fn run(command: Command, data_dir: PathBuf) -> ExitCode {
 }
 
 async fn provider_router(args: &[String], data_dir: &Path) -> ExitCode {
-    match args.first().map(String::as_str) {
-        Some("list") => {
-            let providers = match crate::logic::provider::list_providers(data_dir) {
-                Ok(p) => p,
-                Err(e) => {
-                    console::error(&format!("Error: failed to read providers: {e}"));
-                    return ExitCode::from(1);
-                }
-            };
-            let default = crate::logic::provider::get_default_provider(data_dir)
-                .ok()
-                .flatten();
-            if providers.is_empty() {
-                println!("No providers configured. Use the TS binary's `nitro provider add` (Rust port: Phase 6).");
-            } else {
-                for name in providers {
-                    let marker = match &default {
-                        Some(d) if d.name == name => " (default)",
-                        _ => "",
-                    };
-                    println!("- {name}{marker}");
-                }
-            }
-            ExitCode::SUCCESS
+    let dir = data_dir.to_path_buf();
+    let interactive = std::io::IsTerminal::is_terminal(&std::io::stdout());
+
+    let result: std::io::Result<()> = match args.first().map(String::as_str) {
+        Some("list") if !interactive => {
+            // Headless / CI: print plain text to stdout, no TUI.
+            return print_provider_list(data_dir);
         }
+        Some("list") => crate::screens::run_provider_list_screen(dir),
+        Some("add") => crate::screens::run_provider_add_screen(dir),
+        Some("edit") => crate::screens::run_provider_edit_screen(dir),
+        Some("remove") => crate::screens::run_provider_remove_screen(dir),
+        Some("default") => crate::screens::run_provider_default_screen(dir),
         Some(other) => {
             console::error(&format!(
-                "provider {other}: not yet ported to Rust headless mode (Phase 6)."
+                "Unknown provider subcommand: {other}. Valid: list, add, edit, remove, default"
             ));
-            ExitCode::from(2)
+            return ExitCode::from(2);
         }
         None => {
-            println!("Subcommands: list");
-            ExitCode::SUCCESS
+            println!("Provider subcommands: list, add, edit, remove, default");
+            return ExitCode::SUCCESS;
+        }
+    };
+
+    match result {
+        Ok(()) => ExitCode::SUCCESS,
+        Err(e) => {
+            console::error(&format!("Error: provider screen failed: {e}"));
+            ExitCode::from(1)
         }
     }
+}
+
+fn print_provider_list(data_dir: &Path) -> ExitCode {
+    let providers = match crate::logic::provider::list_providers(data_dir) {
+        Ok(p) => p,
+        Err(e) => {
+            console::error(&format!("Error: failed to read providers: {e}"));
+            return ExitCode::from(1);
+        }
+    };
+    let default = crate::logic::provider::get_default_provider(data_dir)
+        .ok()
+        .flatten();
+    if providers.is_empty() {
+        println!("No providers configured. Run `nitro provider add` to set one up.");
+    } else {
+        for name in providers {
+            let marker = match &default {
+                Some(d) if d.name == name => " (default)",
+                _ => "",
+            };
+            println!("- {name}{marker}");
+        }
+    }
+    ExitCode::SUCCESS
 }
