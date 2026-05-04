@@ -25,7 +25,7 @@ TypeScript binary matches.
 | 5     | ratatui scaffold + EULA + Settings      | [x]     |
 | 6     | Provider screens                        | [x]     |
 | 7     | Chat screen                             | [x]     |
-| 8     | Cutover + polish                        | [ ]     |
+| 8     | Cutover + polish                        | [x]     |
 
 ## Feature inventory
 
@@ -92,7 +92,7 @@ TypeScript binary matches.
 | ToolDisplay      | Render tool calls + results                       | x      |
 | BashPrompt       | Approve/reject bash command modal                 | x      |
 | AskPrompt        | Multi-question modal                              | x      |
-| TokenUsageContext| Token totals across the session                   | [~] (Phase 8 polish) |
+| TokenUsageContext| Token totals across the session                   | x      |
 | Custom widgets   | TextInput, Text, Select                           | x (inline)           |
 
 ### Tests to mirror

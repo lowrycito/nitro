@@ -137,7 +137,7 @@ impl ChatScreen {
             .split(area);
 
         // Header
-        let header = Paragraph::new(Line::from(vec![
+        let mut header_spans = vec![
             Span::styled("Nitro", Style::default().add_modifier(Modifier::BOLD)),
             Span::raw("  • "),
             Span::styled(
@@ -146,8 +146,22 @@ impl ChatScreen {
             ),
             Span::raw("  • "),
             Span::styled(self.mode_label(), Style::default().fg(FG_SECONDARY)),
-        ]));
-        frame.render_widget(header, layout[0]);
+        ];
+        if self.cfg.settings.show_token_summary
+            && (self.total_usage.input_tokens > 0 || self.total_usage.output_tokens > 0)
+        {
+            header_spans.push(Span::raw("  • "));
+            header_spans.push(Span::styled(
+                format!(
+                    "tok in={} out={} cache={}",
+                    self.total_usage.input_tokens,
+                    self.total_usage.output_tokens,
+                    self.total_usage.cached_input_tokens,
+                ),
+                Style::default().fg(FG_SECONDARY),
+            ));
+        }
+        frame.render_widget(Paragraph::new(Line::from(header_spans)), layout[0]);
 
         self.transcript.render(
             frame,
