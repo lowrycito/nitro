@@ -1,0 +1,30 @@
+[package]
+name = "nitro"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.80"
+description = "A tiny and efficient Bash agent for the command line (Rust port)"
+license = "MIT"
+publish = false
+
+[[bin]]
+name = "nitro"
+path = "src/main.rs"
+
+[lib]
+name = "nitro"
+path = "src/lib.rs"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "1"
+dirs = "5"
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"

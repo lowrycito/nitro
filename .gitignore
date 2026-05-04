@@ -38,3 +38,7 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # test safety sentinel files
 .nitro-test-sentinel-bash-unit
 .nitro-test-sentinel-bash-ui
+
+# Rust port
+rust/target
+rust/Cargo.lock.bak
