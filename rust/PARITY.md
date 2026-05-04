@@ -19,7 +19,7 @@ TypeScript binary matches.
 | ----- | -------------------------------------- | ------- |
 | 0     | Cargo scaffold + CLI dispatch parity   | [x]     |
 | 1     | Pure-data layer                         | [x]     |
-| 2     | Bash tool execution + safety classifier | [ ]     |
+| 2     | Bash tool execution + safety classifier | [x]     |
 | 3     | LLM clients (3 backends)                | [ ]     |
 | 4     | Headless one-shot CLI end-to-end        | [ ]     |
 | 5     | ratatui scaffold + EULA + Settings      | [ ]     |
@@ -63,10 +63,10 @@ TypeScript binary matches.
 
 | Tool         | Rust module     | Status |
 | ------------ | --------------- | ------ |
-| Bash exec    | `tools::bash`   | [ ]    |
-| Bash safety  | `tools::bash`   | [ ]    |
-| AskUser      | `tools::ask`    | [ ]    |
-| Tool dispatch | `tools` (top)  | [ ]    |
+| Bash exec    | `tools::bash`   | x      |
+| Bash safety  | `tools::bash`   | x      |
+| AskUser      | `tools::ask`    | x      |
+| Tool dispatch | `tools` (top)  | x      |
 
 ### Screens (`src/screens/`)
 
@@ -104,9 +104,9 @@ TypeScript binary matches.
 | `tests/provider.test.ts`           | `rust/src/logic/provider.rs` + `tests/format_compat.rs` | x |
 | `tests/conversation.test.ts`       | `rust/src/logic/conversation.rs` + `tests/format_compat.rs` | x |
 | `tests/llm.test.ts`                | `rust/tests/llm.rs`               | [ ]    |
-| `tests/bash.test.tsx`              | `rust/tests/bash.rs`              | [ ]    |
-| `tests/tool.test.tsx`              | `rust/tests/tool.rs`              | [ ]    |
-| `tests/question.test.tsx`          | `rust/tests/question.rs`          | [ ]    |
+| `tests/bash.test.tsx` (logic)      | `rust/tests/bash_exec.rs` + `tools::bash::tests` | x |
+| `tests/tool.test.tsx`              | `rust/src/tools/bash.rs::tests` (output schemas) | x |
+| `tests/question.test.tsx` (logic)  | `rust/src/tools/ask.rs::tests`    | x      |
 | `tests/providers.test.tsx` (UI)    | `rust/tests/provider_ui.rs`       | [ ]    |
 | `tests/ui/BashPromptTest.tsx`      | `rust/tests/ui/bash_prompt.rs`    | [ ]    |
 | `tests/ui/AskPromptTest.tsx`       | `rust/tests/ui/ask_prompt.rs`     | [ ]    |
