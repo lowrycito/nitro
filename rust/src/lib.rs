@@ -6,3 +6,4 @@
 //! migrated. See `PARITY.md` at the crate root for the running checklist.
 
 pub mod cli;
+pub mod logic;

@@ -17,8 +17,8 @@ TypeScript binary matches.
 
 | Phase | Title                                  | Status  |
 | ----- | -------------------------------------- | ------- |
-| 0     | Cargo scaffold + CLI dispatch parity   | [~]     |
-| 1     | Pure-data layer                         | [ ]     |
+| 0     | Cargo scaffold + CLI dispatch parity   | [x]     |
+| 1     | Pure-data layer                         | [x]     |
 | 2     | Bash tool execution + safety classifier | [ ]     |
 | 3     | LLM clients (3 backends)                | [ ]     |
 | 4     | Headless one-shot CLI end-to-end        | [ ]     |
@@ -50,13 +50,13 @@ TypeScript binary matches.
 
 | File                            | Rust module          | Status |
 | ------------------------------- | -------------------- | ------ |
-| `config.ts` (APP_DATA_DIR, perms) | `logic::config`      | [ ]    |
-| `eula.ts` (version + text)        | `logic::eula`        | [ ]    |
-| `settings.ts` (load/save/schema)  | `logic::settings`    | [ ]    |
-| `provider.ts` (auth.json CRUD)    | `logic::provider`    | [ ]    |
-| `defaultProviders.ts` (presets)   | `logic::defaults`    | [ ]    |
+| `config.ts` (APP_DATA_DIR, perms) | `logic::config`      | x      |
+| `eula.ts` (version + text)        | `logic::eula`        | x      |
+| `settings.ts` (load/save/schema)  | `logic::settings`    | x      |
+| `provider.ts` (auth.json CRUD)    | `logic::provider`    | x      |
+| `defaultProviders.ts` (presets)   | `logic::defaults`    | x      |
 | `defaultProviders.ts::fetchModels`| `logic::defaults`    | [ ]    |
-| `conversation.ts` (chats/state)   | `logic::conversation`| [ ]    |
+| `conversation.ts` (chats/state)   | `logic::conversation`| x      |
 | `llm.ts` (3 clients + streaming)  | `logic::llm`         | [ ]    |
 
 ### Tools (`src/tools/`)
@@ -98,11 +98,11 @@ TypeScript binary matches.
 
 | TS test file                       | Rust counterpart                  | Status |
 | ---------------------------------- | --------------------------------- | ------ |
-| `tests/cli.test.ts`                | `rust/src/cli.rs::tests`          | [x]    |
-| `tests/config.test.ts`             | `rust/tests/config.rs`            | [ ]    |
-| `tests/settings.test.tsx` (logic)  | `rust/tests/settings.rs`          | [ ]    |
-| `tests/provider.test.ts`           | `rust/tests/provider.rs`          | [ ]    |
-| `tests/conversation.test.ts`       | `rust/tests/conversation.rs`      | [ ]    |
+| `tests/cli.test.ts`                | `rust/src/cli.rs::tests`          | x      |
+| `tests/config.test.ts`             | `rust/src/logic/config.rs::tests` | x      |
+| `tests/settings.test.tsx` (logic)  | `rust/src/logic/settings.rs` + `tests/format_compat.rs` | x |
+| `tests/provider.test.ts`           | `rust/src/logic/provider.rs` + `tests/format_compat.rs` | x |
+| `tests/conversation.test.ts`       | `rust/src/logic/conversation.rs` + `tests/format_compat.rs` | x |
 | `tests/llm.test.ts`                | `rust/tests/llm.rs`               | [ ]    |
 | `tests/bash.test.tsx`              | `rust/tests/bash.rs`              | [ ]    |
 | `tests/tool.test.tsx`              | `rust/tests/tool.rs`              | [ ]    |
