@@ -9,6 +9,7 @@ pub mod config;
 pub mod conversation;
 pub mod defaults;
 pub mod eula;
+pub mod llm;
 pub mod provider;
 pub mod settings;
 
