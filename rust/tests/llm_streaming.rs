@@ -245,7 +245,8 @@ async fn fetch_models_returns_ids_on_success() {
         .mount(&server)
         .await;
 
-    let names = nitro::logic::llm::fetch_models(&server.uri(), "k", ApiType::OpenAiCompatible).await;
+    let names =
+        nitro::logic::llm::fetch_models(&server.uri(), "k", ApiType::OpenAiCompatible).await;
     assert_eq!(names, vec!["a".to_string(), "b".to_string()]);
 }
 
@@ -258,7 +259,8 @@ async fn fetch_models_returns_empty_on_failure() {
         .mount(&server)
         .await;
 
-    let names = nitro::logic::llm::fetch_models(&server.uri(), "k", ApiType::OpenAiCompatible).await;
+    let names =
+        nitro::logic::llm::fetch_models(&server.uri(), "k", ApiType::OpenAiCompatible).await;
     assert!(names.is_empty());
 }
 

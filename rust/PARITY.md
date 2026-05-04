@@ -21,7 +21,7 @@ TypeScript binary matches.
 | 1     | Pure-data layer                         | [x]     |
 | 2     | Bash tool execution + safety classifier | [x]     |
 | 3     | LLM clients (3 backends)                | [x]     |
-| 4     | Headless one-shot CLI end-to-end        | [ ]     |
+| 4     | Headless one-shot CLI end-to-end        | [x]     |
 | 5     | ratatui scaffold + EULA + Settings      | [ ]     |
 | 6     | Provider screens                        | [ ]     |
 | 7     | Chat screen                             | [ ]     |
@@ -35,16 +35,17 @@ TypeScript binary matches.
 | --------------------------------------------------- | -- | ---- |
 | `nitro` (no args) prints usage                      | x  | x    |
 | `nitro help`                                        | x  | x    |
-| `nitro "<request>"` (multi-word) → one-shot         | x  | [~]  |
-| `nitro interactive [req]` / `nitro i [req]`         | x  | [~]  |
-| `nitro continue <req>` / `c <req>`                  | x  | [~]  |
+| `nitro "<request>"` (multi-word) → one-shot         | x  | x    |
+| `nitro interactive [req]` / `nitro i [req]`         | x  | [~] (Phase 7) |
+| `nitro continue <req>` / `c <req>`                  | x  | x    |
 | `nitro continue` without request → error + exit 1   | x  | x    |
-| `nitro resume [req]` / `r [req]`                    | x  | [~]  |
-| `nitro strict [req]` / `s [req]`                    | x  | [~]  |
-| `nitro settings`                                    | x  | [~]  |
-| `nitro provider <subcommand>`                       | x  | [~]  |
+| `nitro resume [req]` / `r [req]`                    | x  | [~] (Phase 7) |
+| `nitro strict [req]` / `s [req]`                    | x  | x    |
+| `nitro settings`                                    | x  | [~] (Phase 5) |
+| `nitro provider list`                               | x  | x    |
+| `nitro provider add\|edit\|remove\|default`         | x  | [~] (Phase 6) |
 | Unknown command → red error + usage                 | x  | x    |
-| EULA gate before any command                        | x  | [ ]  |
+| EULA gate before any command                        | x  | x    |
 
 ### Data layer (`src/logic/`)
 
