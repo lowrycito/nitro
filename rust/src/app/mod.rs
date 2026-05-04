@@ -26,7 +26,7 @@ pub async fn run(command: Command, data_dir: PathBuf) -> ExitCode {
     };
 
     if !eula::is_agreed(&settings) {
-        match eula::prompt_and_record(&data_dir, &settings) {
+        match eula::gate(&data_dir, &settings) {
             eula::Outcome::Accepted => {}
             eula::Outcome::Declined => return ExitCode::from(1),
             eula::Outcome::Error(msg) => {
@@ -46,13 +46,13 @@ pub async fn run(command: Command, data_dir: PathBuf) -> ExitCode {
             println!("{}", crate::cli::USAGE);
             ExitCode::SUCCESS
         }
-        Command::Settings => {
-            console::error(
-                "settings: not yet ported to Rust headless mode; use the TS binary for the menu, \
-                 or edit ~/.nitro/settings.json directly. Ratatui menu lands in Phase 5.",
-            );
-            ExitCode::from(2)
-        }
+        Command::Settings => match crate::screens::run_settings_screen(data_dir.clone()) {
+            Ok(()) => ExitCode::SUCCESS,
+            Err(e) => {
+                console::error(&format!("Error: settings screen failed: {e}"));
+                ExitCode::from(1)
+            }
+        },
         Command::Provider { args } => provider_router(&args, &data_dir).await,
         Command::OneShot { request } => chat::run_one_shot(&data_dir, &request, false, None).await,
         Command::Continue { request } => {

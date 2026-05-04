@@ -22,7 +22,7 @@ TypeScript binary matches.
 | 2     | Bash tool execution + safety classifier | [x]     |
 | 3     | LLM clients (3 backends)                | [x]     |
 | 4     | Headless one-shot CLI end-to-end        | [x]     |
-| 5     | ratatui scaffold + EULA + Settings      | [ ]     |
+| 5     | ratatui scaffold + EULA + Settings      | [x]     |
 | 6     | Provider screens                        | [ ]     |
 | 7     | Chat screen                             | [ ]     |
 | 8     | Cutover + polish                        | [ ]     |
@@ -73,8 +73,8 @@ TypeScript binary matches.
 
 | Screen           | Rust module                | Status |
 | ---------------- | -------------------------- | ------ |
-| EulaScreen       | `screens::eula`            | [ ]    |
-| SettingsScreen   | `screens::settings`        | [ ]    |
+| EulaScreen       | `screens::eula_screen`     | x      |
+| SettingsScreen   | `screens::settings_screen` | x      |
 | ProviderRouter   | `screens::provider_router` | [ ]    |
 | ProviderList     | `screens::provider_list`   | [ ]    |
 | ProviderAdd      | `screens::provider_add`    | [ ]    |

@@ -493,7 +493,10 @@ mod tests {
         assert_eq!(days_to_date_string(19_723), "January 1, 2024");
         assert_eq!(days_to_date_string(19_723 + 185), "July 4, 2024");
         // 2027-01-01: 19_723 + 366 (2024 leap) + 365 (2025) + 365 (2026).
-        assert_eq!(days_to_date_string(19_723 + 366 + 365 + 365), "January 1, 2027");
+        assert_eq!(
+            days_to_date_string(19_723 + 366 + 365 + 365),
+            "January 1, 2027"
+        );
     }
 
     #[test]

@@ -8,4 +8,5 @@
 pub mod app;
 pub mod cli;
 pub mod logic;
+pub mod screens;
 pub mod tools;

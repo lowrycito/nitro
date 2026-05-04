@@ -17,7 +17,6 @@ use nitro::cli::Command;
 use nitro::logic::eula::EULA_VERSION;
 use nitro::logic::provider::{ApiType, Auth, ProviderInfo};
 use nitro::logic::settings::{save_settings, Settings};
-use serde_json::json;
 use tempfile::TempDir;
 use wiremock::matchers::{method, path};
 use wiremock::{Mock, MockServer, ResponseTemplate};
